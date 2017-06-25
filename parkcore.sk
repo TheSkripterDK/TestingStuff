@@ -179,3 +179,6 @@ on break:
 		set {confirm.%player%} to true
 		set {confirmblock} to target block
 			
+#Bouncy
+on walk on slime block:
+	apply jump boost 2 to player for 1 seconds
