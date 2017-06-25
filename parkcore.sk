@@ -1,0 +1,182 @@
+#Park Core by DerpyTheCoder
+
+#Shops
+on right click on sign:
+	line 1 is "&9[Shop]"
+	line 2 is "Castle"
+	if {shop.castle} is true:
+		message "&8[&9Shop&8] &7Opening Shop &bCastle&7..."
+	else:
+		message "&8[&9Shop&8] &cThis Shop is currently Closed."
+		
+
+#Queue
+on right click on sign:
+	line 1 is "&9[Queue]"
+	if {queue.%target block%} is not set:
+		message "&8[&9Queue&8] &cUndefined Queue."
+		stop
+	if {queue.%target block%} is true:
+		message "&8[&9Queue&8] &aYou have been added to the %{queue.%target block%.name}% Queue"
+		stop
+	else:
+		message "&8[&9Queue&8] &cThis Queue is currently disabled."
+		
+command /queue [<string>] [<string>] [<string>]:
+	permission: park.queue
+	permission message: &cMissing Permission
+	trigger:
+		if arg 1 is "disable":
+			if arg 2 is set:
+				if arg 3 is not set:
+					set line 3 of {queue.%{queuepos.%arg 2%}%} to "&cDisabled."
+					set {queue.%{queuepos.%arg 2%}%} to false
+					message "&8[9Queue&8] &cQueue %arg 2% disabled."
+					stop
+			else:
+				message "&8[9Queue&8] &cMissing Arguments!"
+				message "&8[9Queue&8] &6/queue disable [Queue Name]"
+				stop
+				else:
+					message "&8[9Queue&8] &cToo many Arguments!"
+					message "&8[9Queue&8] &6/queue disable [Queue Name]"
+					stop
+		
+		if arg 1 is "enable":
+			if arg 2 is set:
+				if arg 3 is not set:
+					if {queue.%{queuepos.%arg 2%}%.teleport} is not set:
+						message "&8[9Queue&8] &cYou need to set a teleport"
+						message "&8[9Queue&8] &cposition for this queue first!"
+						stop
+					set line 3 of {queue.%{queuepos.%arg 2%}%} to ""
+					set {queue.%{queuepos.%arg 2%}%} to true
+					message "&8[9Queue&8] &aQueue %arg 2% enabled."
+					stop
+			else:
+				message "&8[9Queue&8] &cMissing Arguments!"
+				message "&8[9Queue&8] &6/queue disable [Queue Name]"
+				stop
+				else:
+					message "&8[9Queue&8] &cToo many Arguments!"
+					message "&8[9Queue&8] &6/queue disable [Queue Name]"
+					stop
+					
+		if arg 1 is "setup":
+			if arg 2 is set:
+				if arg 3 is a number:
+					set {queuegemsr} to now
+					message "&8[9Queue&8] &aStarted Creation of queue %arg 2%"
+					if player is not looking at a sign:
+						message "&8[9Queue&8] &cCanceled Creation of queue %arg 2%"
+						message "&8[9Queue&8] &cYou need to look at a sign"
+						message "&8[9Queue&8] &cto create a new Queue"
+						stop
+					else:
+						if {queue.%target block%} is set:
+							message "&8[9Queue&8] &cCanceled Creation of queue %arg 2%"
+							message "&8[9Queue&8] &cYou need a unused sign"
+							message "&8[9Queue&8] &cto create a new Queue"
+							stop
+						else:
+							set {queuepos.%arg 2%} to target block
+							set {queue.%target block%.name} to "%arg 2%"
+							set {queue.%target block%.gems} to arg 2
+							set {queue.%{queuepos.%arg 2%}%} to false
+							set {_t} to difference between {queuegemsr} and now
+							message "&8[9Queue&8] &aQueue %arg 2% created in &a%{_t}%"
+							message "&8[9Queue&8] &aCommand to set the Teleport position:"
+							message "&8[9Queue&8] &6/queue pos [Queue Name]"
+							message "&8[9Queue&8] &aThis will set the Teleport position"
+							message "&8[9Queue&8] &aat your position."
+							stop
+			else:
+				message "&8[9Queue&8] &cMissing Arguments!"
+				message "&8[9Queue&8] &6/queue setup [Queue Name] [Queue gems]"
+				stop
+				else:
+					message "&8[9Queue&8] &cMissing Arguments!"
+					message "&8[9Queue&8] &6/queue setup [Queue Name] [Queue gems]"
+					stop
+		if arg 1 is "help":
+			if arg 2 is not set:
+				if arg 3 not set:
+					message "&9&lQueue System &fby DerpyTheCoder"
+					message "&a/queue setup [Queue Name] [Gems]"
+					message "&fCreate New Queues"
+					message "&a/queue disable [Queue Name]"
+					message "&fDisable active queues"
+					message "&a/queue enable [Queue Name]"
+					message "&fEnable disabled queues"
+					message "&eThe TP Pos needs to be set!"
+					message "&a/queue pos [Queue Name]"
+					message "&fCreates the TP pos"
+					message "&eThe TP Pos will be set at"
+					message "&eyour location."
+					stop
+			else:
+				message "&8[9Queue&8] &cToo many Arguments!"
+				message "&8[9Queue&8] &6/queue help"
+				stop
+				else:
+					message "&8[9Queue&8] &cToo many Arguments!"
+					message "&8[9Queue&8] &6/queue help"
+					stop
+		if arg 1 is "info":
+			if arg 2 is set:
+				if arg 3 not set:
+					message "&8[9Queue&8] &aGathering Data..."
+					if {queue.%{queuepos.%arg 2%}%} is not set:
+						message "&8[&9Queue&8] &cThere is no queue named %arg 2%"
+					else:
+						message "&2&lQueue Data:"
+						message "&fName: &b%{queue.%{queuepos.%arg 2%}%.name}%"
+						message "&fEnabled: &b{queue.%{queuepos.%arg 2%}%}"
+						message "&fGems: {queue.%{queuepos.%arg 2%}%.gems}"
+						if {queue.%{queuepos.%arg 2%}%.tppos} is set:
+							message "&fTP Pos: &b{queue.%{queuepos.%arg 2%}%.tppos}"
+						else:
+							message "&fTP Pos: &cNot Set"
+			else:
+				message "&8[9Queue&8] &cMissing Arguments!"
+				message "&8[9Queue&8] &6/queue info [Queue Name]"
+				stop
+				else:
+					message "&8[9Queue&8] &cToo many Arguments!"
+					message "&8[9Queue&8] &6/queue info [Queue Name]"
+					stop
+		if arg 1 is "pos":
+			if arg 2 is set:
+				if arg 3 not set:
+					set {queue.%{queuepos.%arg 2%}%.tppos} to the player's location
+					message "&8[9Queue&8] &aTP Pos successfully set."
+			else:
+				message "&8[9Queue&8] &cMissing Arguments!"
+				message "&8[9Queue&8] &6/queue pos [Queue Name]"
+				stop
+				else:
+					message "&8[9Queue&8] &cToo many Arguments!"
+					message "&8[9Queue&8] &6/queue pos [Queue Name]"
+					stop
+		if arg 1 is "confirm":
+			if arg 2 is not set:
+				if arg 3 not set:
+					if {confirm.%player%} is false:
+						message "&8[&9Queue&8] &cThis command is currently disabled for you"
+						stop
+					else:
+						delete {queue.{confirmblock}}
+						delete {queue.{confirmblock}.gems}
+						delete {queue.{confirmblock}.name}
+						delete {queue.{confirmblock}.tppos}
+						set block at {confirmblock} to air
+						message "&8[&9Queue&8] &cQueue deleted."
+#Remove Queue signs
+on break:
+	if event-block is sign:
+		cancel event
+		line 1 is "&9[Queue]"
+		message "&8[&9Queue&8] &cTo confirm the removal of this Queue, please type &6/queue confirm"
+		set {confirm.%player%} to true
+		set {confirmblock} to target block
+			
