@@ -161,6 +161,9 @@ command /queue [<string>] [<string>] [<string>]:
 						delete {queue.{confirmblock}.tppos}
 						set block at {confirmblock} to air
 						message "&8[&9Queue&8] &cQueue deleted."
+						stop
+		message "&8[&9Queue&8] &cUnknown Sub-Command. Use &6/queue help &cfor all commands"
+		stop
 #Remove Queue signs
 on break:
 	if event-block is sign:
