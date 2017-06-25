@@ -7,13 +7,19 @@ on right click on sign:
 		message "&8[&9Queue&8] &cUndefined Queue."
 		stop
 	if {queue.%target block%} is true:
-		message "&8[&9Queue&8] &aYou have been added to the %{queue.%target block%.name}% Queue"
+		if {mineplex.gems.%{_p}%} is bigger than {queue.%target block%.gems}:
+			remove {queue.%target block%.gems} from {mineplex.gems.%{_p}%} 
+			message "&8[&9Queue&8] &aYou have been moved to the Queue."
+			message "&8[&9Queue&8] &c-%{queue.%target block%.gems}% Gems"
+			stop
+		else:
+			message "&8[&9Queue&8] &cYou need more Gems."
 		stop
 	else:
 		message "&8[&9Queue&8] &cThis Queue is currently disabled."
 		
 command /queue [<string>] [<string>] [<string>]:
-	permission: park.queue
+	permission: mineplex.admin
 	permission message: &cMissing Permission
 	trigger:
 		if arg 1 is "disable":
