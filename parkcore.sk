@@ -1,15 +1,5 @@
 #Park Core by DerpyTheCoder
-
-#Shops
-on right click on sign:
-	line 1 is "&9[Shop]"
-	line 2 is "Castle"
-	if {shop.castle} is true:
-		message "&8[&9Shop&8] &7Opening Shop &bCastle&7..."
-	else:
-		message "&8[&9Shop&8] &cThis Shop is currently Closed."
 		
-
 #Queue
 on right click on sign:
 	line 1 is "&9[Queue]"
