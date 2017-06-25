@@ -1,0 +1,6 @@
+#Autoupdater
+on load:
+	message "&8[&9ParkCore&8] &7Running AutoUpdate..."
+	delete file "plugins/Skript/scripts/parkcore.sk"
+	download from "https://github.com/DerpyTheCoder/Park-Core/raw/master/parkcore.sk" to "plugins/Skript/scripts/parkcore.sk"
+	message "&8[&9ParkCore&8] &7Updated &61 File: parkcore.sk"
