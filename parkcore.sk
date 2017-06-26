@@ -1,5 +1,37 @@
 #Park Core by DerpyTheCoder
-		
+
+#Shops BETA
+on right click on sign:
+	line 1 is "&9[Shop]"
+	line 1 is "Ticket"
+	message "&8[&aShop&8] &cThis Shop is not done... Yet..."
+
+on right click on sign:
+	line 1 is "&9[Shop]"
+	line 1 is "Shop"
+	make player execute command "/shop ticket"
+
+command /shop [<string>] [<string>]
+	trigger:
+		if arg 1 is "ticket":
+			open chest with 6 rows named "Ticket Shop" to player
+			wait 4 ticks
+			format slot 10 of player with paper named "&e1 WheezyTicket" with lore "||&7With a &eWheezyTicket&7 you dont||&7need to pay for one ride||||&cOnly useable on Rides!||||&a20 Gems" to close then run [make player execute command "/shop buy ticket1"]
+			format slot 10 of {_p} with paper named "&eWheezyTicket Pack" with lore "||&7With a &eWheezyTicket&7 you dont||&7need to pay for one ride||&7This Pack includes &a5&7 Tickets||||&cOnly useable on Rides!||||&a80 Gems" to close then run [make player execute command "/shop buy ticketpack1"]
+		if arg 1 is "buy":
+			if arg 2 is "ticket1":
+				if {mineplex.gems.%player%} is bigger than 19:
+					remove 20 from {mineplex.gems.%player%}
+					message "&8[&aShop&8] &aSuccessfully Purchased 1x &eWheezyTicket"
+					give player paper named "&eWheezyTicket"
+			if arg 2 is "ticketpack1":
+				if {mineplex.gems.%player%} is bigger than 79:
+					remove 80 from {mineplex.gems.%player%}
+					message "&8[&aShop&8] &aSuccessfully Purchased 1x &eWheezyTicket Pack"
+					loop 5 times:
+						give player paper named "&eWheezyTicket"
+			if arg 2 is not set:
+				message "&8[&aShop&8] &cAn Error Occured."
 #Queue
 on right click on sign:
 	line 1 is "&9[Queue]"
@@ -7,8 +39,8 @@ on right click on sign:
 		message "&8[&9Queue&8] &cUndefined Queue."
 		stop
 	if {queue.%target block%} is true:
-		if {mineplex.gems.%{_p}%} is bigger than {queue.%target block%.gems}:
-			remove {queue.%target block%.gems} from {mineplex.gems.%{_p}%} 
+		if {mineplex.gems.%player%} is bigger than {queue.%target block%.gems}:
+			remove {queue.%target block%.gems} from {mineplex.gems.%player%} 
 			message "&8[&9Queue&8] &aYou have been moved to the Queue."
 			message "&8[&9Queue&8] &c-%{queue.%target block%.gems}% Gems"
 			stop
