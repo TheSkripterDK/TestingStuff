@@ -35,6 +35,11 @@ command /shop [<string>] [<string>]
 #Queue
 on right click on sign:
 	line 1 is "&9[Queue]"
+	if player is holding paper:
+		if name of player's tool is "&eWheezyTicket":
+			cancel event
+			message "&8[&9Queue&8] &aYou used 1 &eWheezyTicket"
+			{queue.%target block%.tppos}
 	if {queue.%target block%} is not set:
 		message "&8[&9Queue&8] &cUndefined Queue."
 		stop
@@ -43,6 +48,7 @@ on right click on sign:
 			remove {queue.%target block%.gems} from {mineplex.gems.%player%} 
 			message "&8[&9Queue&8] &aYou have been moved to the Queue."
 			message "&8[&9Queue&8] &c-%{queue.%target block%.gems}% Gems"
+			teleport the player to {queue.%target block%.tppos}
 			stop
 		else:
 			message "&8[&9Queue&8] &cYou need more Gems."
