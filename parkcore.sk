@@ -83,7 +83,7 @@ command /queue [<string>] [<string>] [<string>]:
 						message "&8[9Queue&8] &cYou need to set a teleport"
 						message "&8[9Queue&8] &cposition for this queue first!"
 						stop
-					set line 3 of {queue.%{queuepos.%arg 2%}%} to ""
+					set line 3 of {queue.%{queuepos.%arg 2%}%} to "&a%{queue.%{queuepos.%arg 2%}%.gems}% Gems"
 					set {queue.%{queuepos.%arg 2%}%} to true
 					message "&8[9Queue&8] &aQueue %arg 2% enabled."
 					stop
@@ -117,6 +117,9 @@ command /queue [<string>] [<string>] [<string>]:
 							set {queue.%target block%.name} to "%arg 2%"
 							set {queue.%target block%.gems} to arg 2
 							set {queue.%{queuepos.%arg 2%}%} to false
+							set line 1 of %target block% to "&9[Queue]"
+							set line 2 of {queue.%target block%} to "%{queue.%target block%.name}%"
+							set line 2 of {queue.%target block%} to "&a%{queue.%target block%.gems}% Gems"
 							set {_t} to difference between {queuegemsr} and now
 							message "&8[9Queue&8] &aQueue %arg 2% created in &a%{_t}%"
 							message "&8[9Queue&8] &aCommand to set the Teleport position:"
