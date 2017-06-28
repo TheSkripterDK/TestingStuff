@@ -7,6 +7,10 @@ on right click on sign:
 	message "&8[&aShop&8] &cThis Shop is not done... Yet..."
 
 on right click on sign:
+	line 1 is "[Shop]"
+	line 2 is "Ticket"
+	set line 1 of %target block% to "&9[Shop]"
+on right click on sign:
 	line 1 is "&9[Shop]"
 	line 1 is "Shop"
 	make player execute command "/shop ticket"
@@ -35,11 +39,13 @@ command /shop [<string>] [<string>]
 #Queue
 on right click on sign:
 	line 1 is "&9[Queue]"
-	if player is holding paper:
-		if name of player's tool is "&eWheezyTicket":
-			cancel event
-			message "&8[&9Queue&8] &aYou used 1 &eWheezyTicket"
-			{queue.%target block%.tppos}
+	if {queue.%target block%} is true:	
+		if player is holding paper:
+			if name of player's tool is "&eWheezyTicket":
+				cancel event
+				message "&8[&9Queue&8] &aYou used 1 &eWheezyTicket"
+				{queue.%target block%.tppos}
+				stop
 	if {queue.%target block%} is not set:
 		message "&8[&9Queue&8] &cUndefined Queue."
 		stop
