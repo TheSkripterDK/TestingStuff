@@ -4,3 +4,10 @@ on load:
 	delete file "plugins/Skript/scripts/parkcore.sk"
 	download from "https://github.com/DerpyTheCoder/Park-Core/raw/master/parkcore.sk" to "plugins/Skript/scripts/parkcore.sk"
 	message "&8[&9ParkCore&8] &7Updated &61 File: parkcore.sk"
+	
+command /parkcore:reload:
+	permission: mineplex.dev
+	permission message: &cMissing Permission
+	trigger:
+		message "&8[&9ParkCORE&8] &7ParkCORE is reloading!"
+		execute console command "/sk reload updater.sk"
