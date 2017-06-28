@@ -63,7 +63,7 @@ on right click on sign:
 		message "&8[&9Queue&8] &cThis Queue is currently disabled."
 		
 command /queue [<string>] [<string>] [<string>]:
-	permission: mineplex.admin
+	permission: mineplex.dev
 	permission message: &cMissing Permission
 	trigger:
 		if arg 1 is "disable":
